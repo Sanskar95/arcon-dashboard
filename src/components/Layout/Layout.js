@@ -32,14 +32,14 @@ const Layout = () => {
     return (
         <List style={{ backgroundColor: "#f2f2f2" }}>
           <Link
-              to={"/option0"}
+              to={"/"}
               style={{ textDecoration: "none" }}
           >
             <ListItem button onClick={() => toggleDrawer()}>
               <ListItemIcon>
                 <PlaceIcon />
               </ListItemIcon>
-              <ListItemText primary={"Go to option 0"} />
+              <ListItemText primary={"Applications"} />
             </ListItem>
           </Link>
           <Link
