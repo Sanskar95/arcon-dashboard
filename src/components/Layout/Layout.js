@@ -42,7 +42,7 @@ const Layout = () => {
               <ListItemText primary={"Applications"} />
             </ListItem>
           </Link>
-          <Link
+          {/* <Link
               to={"/option1"}
               style={{ textDecoration: "none" }}
           >
@@ -63,7 +63,7 @@ const Layout = () => {
               </ListItemIcon>
               <ListItemText primary={"Go to option 2"} />
             </ListItem>
-          </Link>
+          </Link> */}
 
           
 
@@ -87,9 +87,6 @@ const Layout = () => {
           <Typography style={{ flexGrow: 1 }} variant="h5">
             ARCON DASHBOARD
           </Typography>
-          <Button onClick={handleLogout} color="inherit">
-            LOGOUT
-          </Button>
         </Toolbar>
       </AppBar>
 

@@ -25,9 +25,9 @@ export default function MetricsCard(props) {
           trend={{
             slope: 1,
             description: props.nodeName,
-            value: "0.5%",
+            
           }}
-          title="INBOUND THROUGHPUT"
+          title={props.metricName}
           fetching={false}
           error={null}
         />

@@ -8,30 +8,38 @@ import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
-    root: {
-      width: "450px",
-      margin: "10px",
-    },
-  });
+  root: {
+    width: "450px",
+    margin: "10px",
+    backgroundColor: "#fdfd96",
+  },
 
+  button: {
+    backgroundColor: "#92dff3",
+  },
+});
 
 export default function ApplicationCard() {
-    const classes = useStyles();
+  const classes = useStyles();
 
   const history = useHistory();
 
-  const handleClick = () => history.push(`metrics/testApp`);
+  const handleClick = () => history.push(`nodes/app`);
   return (
     <div>
       <Card className={classes.root}>
         <CardContent>
           <Typography color="textPrimary" gutterBottom>
-            Application Name
+            test_application
           </Typography>
         </CardContent>
         <CardActions>
-          <Button onClick={handleClick} size="medium">
-            SEE METRICS
+          <Button
+            className={classes.button}
+            onClick={handleClick}
+            size="medium"
+          >
+            NODES
           </Button>
         </CardActions>
       </Card>
