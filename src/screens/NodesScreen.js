@@ -29,7 +29,6 @@ export default function NodesScreen() {
   const [nodeNames, setNodeNames] = React.useState(null);
 
   useEffect(() => {
-    console.log("dddd");
     getInboundThrougput("inbound_throughput").then((response) => {
       setNodeNames(getNodeNames(response));
     });
