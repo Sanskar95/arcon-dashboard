@@ -9,7 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import GridItem from "../components/Grid/GridItem.js";
 import GridContainer from "../components/Grid/GridContainer.js";
-import { getNodeNames } from "../utils/Utils.js";
+import { getNodeNames, getSourceNames } from "../utils/Utils.js";
 import { Link } from "react-router-dom";
 import { getInboundThrougput } from "../prometheus-rest/PrometheusService.js";
 
@@ -29,37 +29,48 @@ export default function NodesScreen() {
   const [nodeNames, setNodeNames] = React.useState(null);
 
   useEffect(() => {
-    getInboundThrougput("inbound_throughput").then((response) => {
-      setNodeNames(getNodeNames(response));
-    });
-    console.log(nodeNames);
+    getNodesAndSources();
   }, []);
 
   const getRows = () => {
     return nodeNames ? nodeNames.map((nodeName) => createData(nodeName)) : null;
   };
 
+  const getNodesAndSources = async () => {
+    const [nodes, sources] = await Promise.all([
+      getInboundThrougput("inbound_throughput"),
+      getInboundThrougput("error_counter"),
+    ]);
+    setNodeNames(getNodeNames(nodes).concat(getSourceNames(sources)));
+  };
+
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Node Name</TableCell>
-            <TableCell align="right">Type</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {getRows() &&
-            getRows().map((row) => (
-              <TableRow key={row.nodeName}>
-                <TableCell component="th" scope="row">
-                  <Link to={`/metrics/${row.nodeName}`}>{row.nodeName}</Link>
-                </TableCell>
-                <TableCell align="right">{row.type}</TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div>
+      <TableContainer component={Paper}>
+        <Table
+          className={classes.table}
+          size="small"
+          aria-label="a dense table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>Node Name</TableCell>
+              <TableCell align="right">Type</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {getRows() &&
+              getRows().map((row) => (
+                <TableRow key={row.nodeName}>
+                  <TableCell component="th" scope="row">
+                    <Link to={`/metrics/${row.nodeName}`}>{row.nodeName}</Link>
+                  </TableCell>
+                  <TableCell align="right">{row.type}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }

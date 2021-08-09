@@ -42,18 +42,18 @@ const Layout = () => {
               <ListItemText primary={"Applications"} />
             </ListItem>
           </Link>
-          {/* <Link
-              to={"/option1"}
+          <Link
+              to={"/allocator-metrics"}
               style={{ textDecoration: "none" }}
           >
             <ListItem button onClick={() => toggleDrawer()}>
               <ListItemIcon>
                 <MapIcon />
               </ListItemIcon>
-              <ListItemText primary={"Go to option 1"} />
+              <ListItemText primary={"Allocator Metrics"} />
             </ListItem>
           </Link>
-          <Link
+          {/* <Link
               to={"/option2"}
               style={{ textDecoration: "none" }}
           >

@@ -5,6 +5,7 @@ import MetricsCard from "../components/MetricsCard/MetricsCard";
 import {
   getInboundThrougput,
   getMetricsByNodeName,
+  getMetricsBySourceName,
 } from "../prometheus-rest/PrometheusService.js";
 import { Chart } from "react-google-charts";
 
@@ -12,6 +13,8 @@ const nodeMetrics = [
   "inbound_throughput",
   "watermark_counter",
   "epoch_counter",
+  "error_counter",
+  "incoming_message_rate"
 ];
 
 const hardwareMetricsList = [
@@ -30,9 +33,13 @@ const hardwareMetricsList = [
 
 export default function MetricsDashboard(props) {
   const getMetrics = () => {
-    getMetricsByNodeName(props.match.params.nodeName).then((response) => {
-      setMetricData(response.data.data.result);
-    });
+    props.match.params.nodeName.includes("node")
+      ? getMetricsByNodeName(props.match.params.nodeName).then((response) => {
+          setMetricData(response.data.data.result);
+        })
+      : getMetricsBySourceName(props.match.params.nodeName).then((response) => {
+          setMetricData(response.data.data.result);
+        });
   };
 
   const getActiveHardwareMetrics = () => {
@@ -89,14 +96,15 @@ export default function MetricsDashboard(props) {
 
   return (
     <div>
-      <h3 style={{color: 'green'}}>Metrics for the Node: {props.match.params.nodeName}</h3>
+      <h3 style={{ color: "green" }}>
+        Metrics for the Node: {props.match.params.nodeName}
+      </h3>
       <GridContainer>
         {filterMetricsByType("value").map((nodeMetric) => {
           return (
             <GridItem xs={12} sm={6} md={3}>
               <MetricsCard
                 value={nodeMetric.value[1]}
-               
                 metricName={nodeMetric.metric.__name__}
               />
             </GridItem>
