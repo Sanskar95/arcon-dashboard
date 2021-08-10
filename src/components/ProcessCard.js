@@ -19,12 +19,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ApplicationCard() {
+export default function ProcessCard() {
   const classes = useStyles();
 
   const history = useHistory();
 
-  const handleClick = () => history.push(`/processes/0`);
+  const handleNodesClick = () => history.push(`/nodes/0`);
+  const handleAllocatorMetricsClick = () => history.push(`/allocator-metrics/0`);
+
   return (
     <div>
       <Card className={classes.root}>
@@ -36,10 +38,17 @@ export default function ApplicationCard() {
         <CardActions>
           <Button
             className={classes.button}
-            onClick={handleClick}
+            onClick={handleNodesClick}
             size="medium"
           >
-            processes
+            Node Metrics
+          </Button>
+          <Button
+            className={classes.button}
+            onClick={handleAllocatorMetricsClick}
+            size="medium"
+          >
+            Allocator Metrics
           </Button>
         </CardActions>
       </Card>

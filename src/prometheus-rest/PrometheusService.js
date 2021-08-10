@@ -23,3 +23,15 @@ export const getAllocatorMetricByMetricName = (metricNames) => {
   );
   return axios.all(requestsIterable);
 };
+
+export const getNodeManagers =() =>{
+  let url =
+  'http://localhost:9090/api/v1/query?query=nodes';
+return axios.get(url);
+}
+
+export const getSourceManagers =() =>{
+  let url =
+  'http://localhost:9090/api/v1/query?query=sources';
+return axios.get(url);
+}
