@@ -8,29 +8,28 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { getNodeNames, getSourceNames } from "../utils/Utils.js";
-import { Link } from "react-router-dom";
 import {
   getInboundThrougput,
   getNodeManagers,
   getSourceManagers,
 } from "../prometheus-rest/PrometheusService.js";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   table: {
-   
-    
     width: "100%",
-   
   },
 });
 
 function createData(nodeName) {
-  const type = nodeName.includes("source") ? "Source" : "Node";
+  const type = nodeName.includes("source") ? "source" : "node";
   return { nodeName, type };
 }
 
 export default function NodesScreen() {
   const classes = useStyles();
+  const history = useHistory();
+
   const [nodeNames, setNodeNames] = React.useState(null);
   const [nodeManagers, setNodeManagers] = React.useState([]);
   const [sourceManagers, setSourceManagers] = React.useState([]);
@@ -73,6 +72,9 @@ export default function NodesScreen() {
     });
   };
 
+  const handleClick = (name, type) => {
+    history.push(`/metrics/${name}`, { type: type });
+  };
 
   return (
     <div style={{ display: "flex" }}>
@@ -80,16 +82,24 @@ export default function NodesScreen() {
         <Table className={classes.table} size="small" aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell><strong>Name</strong></TableCell>
-              <TableCell align="right"><strong>Type</strong></TableCell>
+              <TableCell>
+                <strong>Name</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Type</strong>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {getRows() &&
               getRows().map((row) => (
                 <TableRow key={row.nodeName}>
-                  <TableCell component="th" scope="row">
-                    <Link to={`/metrics/${row.nodeName}`}>{row.nodeName}</Link>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    onClick={() => handleClick(row.nodeName, row.type)}
+                  >
+                    {row.nodeName}
                   </TableCell>
                   <TableCell align="right">{row.type}</TableCell>
                 </TableRow>
@@ -99,48 +109,69 @@ export default function NodesScreen() {
       </TableContainer>
 
       <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell><strong>Manager</strong></TableCell>
-            <TableCell align="right">Type</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {nodeManagers &&
-            nodeManagers.map((row) => (
-              <TableRow key={row}>
-                <TableCell component="th" scope="row">
-                  <Link to={`/metrics/${row.nodeName}`}>{row}</Link>
-                </TableCell>
-                <TableCell align="right">{'Node Manager'}</TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+        <Table
+          className={classes.table}
+          size="small"
+          aria-label="a dense table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <strong>Manager</strong>
+              </TableCell>
+              <TableCell align="right">Type</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {nodeManagers &&
+              nodeManagers.map((row) => (
+                <TableRow key={row}>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    onClick={() => handleClick(row, "node_manager")}
+                  >
+                    {/* <Link to={`/metrics/${row}`}>{row}</Link> */}
+                    {row}
+                  </TableCell>
+                  <TableCell align="right">{"Node Manager"}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
 
-      <Table className={classes.table} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell><strong>Manager</strong></TableCell>
-            <TableCell align="right"><strong>Type</strong></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {sourceManagers &&
-            sourceManagers.map((row) => (
-              <TableRow key={row}>
-                <TableCell component="th" scope="row">
-                  <Link to={`/metrics/${row}`}>{row}</Link>
-                </TableCell>
-                <TableCell align="right">{'Source Manager'}</TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-
+        <Table
+          className={classes.table}
+          size="small"
+          aria-label="a dense table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <strong>Manager</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Type</strong>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {sourceManagers &&
+              sourceManagers.map((row) => (
+                <TableRow key={row}>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    onClick={() => handleClick(row, "source_manager")}
+                  >
+                    {row}
+                  </TableCell>
+                  <TableCell align="right">{"Source Manager"}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
       </TableContainer>
-
     </div>
   );
 }

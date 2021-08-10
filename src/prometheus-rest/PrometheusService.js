@@ -8,12 +8,14 @@ export const getInboundThrougput = (metricName) => {
 export const getMetricsByNodeName = (nodeName) => {
   let url =
     'http://localhost:9090/api/v1/query?query={node="' + nodeName + '"}';
+
   return axios.get(url);
 };
 
 export const getMetricsBySourceName = (sourceName) => {
   let url =
-    'http://localhost:9090/api/v1/query?query={node="' + sourceName + '"}';
+    'http://localhost:9090/api/v1/query?query={source="' + sourceName + '"}';
+  console.log(url);
   return axios.get(url);
 };
 
@@ -24,14 +26,28 @@ export const getAllocatorMetricByMetricName = (metricNames) => {
   return axios.all(requestsIterable);
 };
 
-export const getNodeManagers =() =>{
-  let url =
-  'http://localhost:9090/api/v1/query?query=nodes';
-return axios.get(url);
-}
+export const getNodeManagers = () => {
+  let url = "http://localhost:9090/api/v1/query?query=nodes";
+  return axios.get(url);
+};
 
-export const getSourceManagers =() =>{
-  let url =
-  'http://localhost:9090/api/v1/query?query=sources';
-return axios.get(url);
-}
+export const getSourceManagers = () => {
+  let url = "http://localhost:9090/api/v1/query?query=sources";
+  return axios.get(url);
+};
+
+export const getMetricsByTypeAndName = (name, type) => {
+  // const query = {
+  //   [type]: `\"${name}\"`
+  // };
+
+  // const config={
+  //   params: {
+  //     query: JSON.stringify(query).replace(":", "=")
+  //   }
+  // }
+ 
+  let url = `http://localhost:9090/api/v1/query?query={${type}=\"${name}\"}`;
+
+  return axios.get(url);
+};

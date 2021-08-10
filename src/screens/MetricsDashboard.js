@@ -3,21 +3,21 @@ import GridItem from "../components/Grid/GridItem.js";
 import GridContainer from "../components/Grid/GridContainer.js";
 import MetricsCard from "../components/MetricsCard/MetricsCard";
 import {
-  getInboundThrougput,
-  getMetricsByNodeName,
-  getMetricsBySourceName,
+  getMetricsByTypeAndName,
 } from "../prometheus-rest/PrometheusService.js";
 import { Chart } from "react-google-charts";
 
-const nodeMetrics = [
+const numberMetrics = [
   "inbound_throughput",
   "watermark_counter",
   "epoch_counter",
   "error_counter",
-  "incoming_message_rate"
+  "incoming_message_rate",
+  "sources",
+  "nodes"
 ];
 
-const hardwareMetricsList = [
+const histogramMetricsList = [
   "cpu_cycles",
   "instructions",
   "cache_references",
@@ -29,21 +29,21 @@ const hardwareMetricsList = [
   "stalled_cycles_backend",
   "ref_cpu_cycles",
   "batch_execution_time",
+  "checkpoint_execution_time_ms",
 ];
 
 export default function MetricsDashboard(props) {
   const getMetrics = () => {
-    props.match.params.nodeName.includes("node")
-      ? getMetricsByNodeName(props.match.params.nodeName).then((response) => {
-          setMetricData(response.data.data.result);
-        })
-      : getMetricsBySourceName(props.match.params.nodeName).then((response) => {
-          setMetricData(response.data.data.result);
-        });
+    getMetricsByTypeAndName(
+      props.match.params.nodeName,
+      props.location.state.type
+    ).then((response) => {
+      setMetricData(response.data.data.result);
+    });
   };
 
   const getActiveHardwareMetrics = () => {
-    return hardwareMetricsList.filter((hardwareMetric) => {
+    return histogramMetricsList.filter((hardwareMetric) => {
       let flag = false;
       for (let i = 0; i < metricData.length; i++) {
         if (metricData[i].metric.__name__.includes(hardwareMetric)) {
@@ -74,11 +74,11 @@ export default function MetricsDashboard(props) {
   const filterMetricsByType = (type) => {
     if (type === "value") {
       return metricData.filter((metricDataObject) =>
-        nodeMetrics.includes(metricDataObject.metric.__name__)
+        numberMetrics.includes(metricDataObject.metric.__name__)
       );
     } else if (type === "histogram") {
       return metricData.filter((metricDataObject) =>
-        nodeMetrics.includes(metricDataObject.metric.__name__)
+        numberMetrics.includes(metricDataObject.metric.__name__)
       );
     }
   };
