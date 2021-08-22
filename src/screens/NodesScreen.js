@@ -171,6 +171,38 @@ export default function NodesScreen() {
               ))}
           </TableBody>
         </Table>
+
+        <Table
+          className={classes.table}
+          size="small"
+          aria-label="a dense table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <strong>Manager</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Type</strong>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {nodeManagers &&
+              nodeManagers.map((row) => (
+                <TableRow key={row}>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    onClick={() => handleClick(row, "backend")}
+                  >
+                    {row}
+                  </TableCell>
+                  <TableCell align="right">{"Backend"}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
       </TableContainer>
     </div>
   );

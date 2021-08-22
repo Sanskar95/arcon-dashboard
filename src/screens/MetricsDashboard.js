@@ -7,15 +7,17 @@ import {
 } from "../prometheus-rest/PrometheusService.js";
 import { Chart } from "react-google-charts";
 
-const numberMetrics = [
-  "inbound_throughput",
-  "watermark_counter",
-  "epoch_counter",
-  "error_counter",
-  "incoming_message_rate",
-  "sources",
-  "nodes"
-];
+// const numberMetrics = [
+//   "inbound_throughput",
+//   "watermark_counter",
+//   "epoch_counter",
+//   "error_counter",
+//   "incoming_message_rate",
+//   "sources",
+//   "nodes",
+//   "last_checkpoint_size",
+//   "bytes_read"
+// ];
 
 const histogramMetricsList = [
   "cpu_cycles",
@@ -71,17 +73,17 @@ export default function MetricsDashboard(props) {
     return histogramData;
   };
 
-  const filterMetricsByType = (type) => {
-    if (type === "value") {
-      return metricData.filter((metricDataObject) =>
-        numberMetrics.includes(metricDataObject.metric.__name__)
-      );
-    } else if (type === "histogram") {
-      return metricData.filter((metricDataObject) =>
-        numberMetrics.includes(metricDataObject.metric.__name__)
-      );
-    }
-  };
+  // const filterMetricsByType = (type) => {
+  //   if (type === "value") {
+  //     return metricData.filter((metricDataObject) =>
+  //       numberMetrics.includes(metricDataObject.metric.__name__)
+  //     );
+  //   } else if (type === "histogram") {
+  //     return metricData.filter((metricDataObject) =>
+  //       numberMetrics.includes(metricDataObject.metric.__name__)
+  //     );
+  //   }
+  // };
   useEffect(() => {
     getMetrics();
 
@@ -97,10 +99,10 @@ export default function MetricsDashboard(props) {
   return (
     <div>
       <h3 style={{ color: "green" }}>
-        Metrics for the Node: {props.match.params.nodeName}
+        Metrics for the { props.location.state.type}: {props.match.params.nodeName} 
       </h3>
       <GridContainer>
-        {filterMetricsByType("value").map((nodeMetric) => {
+        {metricData.map((nodeMetric) => {
           return (
             <GridItem xs={12} sm={6} md={3}>
               <MetricsCard

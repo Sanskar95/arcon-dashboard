@@ -37,16 +37,6 @@ export const getSourceManagers = () => {
 };
 
 export const getMetricsByTypeAndName = (name, type) => {
-  // const query = {
-  //   [type]: `\"${name}\"`
-  // };
-
-  // const config={
-  //   params: {
-  //     query: JSON.stringify(query).replace(":", "=")
-  //   }
-  // }
- 
   let url = `http://localhost:9090/api/v1/query?query={${type}=\"${name}\"}`;
 
   return axios.get(url);
