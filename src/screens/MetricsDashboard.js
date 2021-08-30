@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import GridItem from "../components/Grid/GridItem.js";
 import GridContainer from "../components/Grid/GridContainer.js";
-import MetricsCard from "../components/MetricsCard/MetricsCard";
+import MetricsCard from "../components/Card/MetricsCard";
 import {
   getMetricsByTypeAndName,
 } from "../prometheus-rest/PrometheusService.js";

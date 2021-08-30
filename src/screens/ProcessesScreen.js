@@ -1,7 +1,7 @@
 import React from "react";
 import GridItem from "../components/Grid/GridItem.js";
 import GridContainer from "../components/Grid/GridContainer.js";
-import ProcessCard from "../components/ProcessCard.js";
+import ProcessCard from "../components/Card/ProcessCard.js";
 
 export default function ProcessesScreen() {
   return (

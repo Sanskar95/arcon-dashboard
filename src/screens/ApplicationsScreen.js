@@ -1,7 +1,7 @@
 import React from "react";
 import GridItem from "../components/Grid/GridItem.js";
 import GridContainer from "../components/Grid/GridContainer.js";
-import ApplicationCard from "../components/MetricsCard/ApplicationCard.js";
+import ApplicationCard from "../components/Card/ApplicationCard.js";
 
 export default function ApplicationsScreen() {
 

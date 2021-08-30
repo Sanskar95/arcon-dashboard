@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import MetricCard from 'react-metric-card'
-import 'react-metric-card/dist/index.css'
+import MetricCard from 'react-metric-card';
+import 'react-metric-card/dist/index.css';
 
 
 

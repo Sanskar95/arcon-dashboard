@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Layout.css";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -6,14 +6,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
-import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import {Link} from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MapIcon from '@material-ui/icons/Map';
-import HomeIcon from '@material-ui/icons/Home';
 import PlaceIcon from '@material-ui/icons/Place';
 
 const Layout = () => {
@@ -23,10 +20,6 @@ const Layout = () => {
     setDrawerOpen(!drawerOpen);
   }
 
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.reload();
-  };
 
   const list =()=>{
     return (
@@ -61,7 +54,7 @@ const Layout = () => {
 
         </List>
     );
-  }
+  };
     return (
     <div>
       <AppBar position="sticky" style={{background: '#008080'}}>

@@ -7,8 +7,3 @@ export  function getNodeNames(responseData) {
 export  function getSourceNames(responseData) {
   return responseData.data.data.result.map((metricObject) => metricObject.metric.source);
 }
-
-
-export function getActivePerfMetrics(responseData){
-  
-}
